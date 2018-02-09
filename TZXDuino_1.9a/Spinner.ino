@@ -7,6 +7,12 @@ void lcdSpinner() {
           lcd.print(indicators[spinpos++]);
         #endif
         
+        #ifdef NEWLCDSCREEN16x2          
+          lcd.setCursor(15,0);
+          lcd.print(indicators[spinpos++]);
+        #endif
+        
+        
         #ifdef OLED1306
             //sendCharXY(indicators[spinpos++],15,0);
            setXY(15,0);sendChar(indicators[spinpos++]);                     
@@ -44,6 +50,43 @@ void lcdTime() {
           } */
           
         #ifdef LCDSCREEN16x2
+        
+            if (lcdsegs % 10 != 0) {itoa(lcdsegs%10,PlayBytes,10);lcd.setCursor(15,0);lcd.print(PlayBytes);} // ultima cifra 1,2,3,4,5,6,7,8,9
+            else 
+               if (lcdsegs % 100 != 0){itoa(lcdsegs%100,PlayBytes,10);lcd.setCursor(14,0);lcd.print(PlayBytes);} // es 10,20,30,40,50,60,70,80,90,110,120,..
+               else 
+                  if (lcdsegs %1000 != 0) {itoa(lcdsegs%1000,PlayBytes,10);lcd.setCursor(13,0);lcd.print(PlayBytes);} // es 100,200,300,400,500,600,700,800,900,1100,..
+                  else {
+                  lcd.setCursor(13,0);
+                  lcd.print("000");} // es 000,1000,2000,...
+/*
+          if (lcdsegs % 10 != 0) {lcd.setCursor(15,0);lcd.print(lcdsegs%10);} // ultima cifra 1,2,3,4,5,6,7,8,9
+          else 
+             if (lcdsegs % 100 != 0){lcd.setCursor(14,0);lcd.print(lcdsegs%100);}  // es 10,20,30,40,50,60,70,80,90,110,120,..
+             else 
+                if (lcdsegs %1000 != 0) {lcd.setCursor(13,0);lcd.print(lcdsegs%1000);}  // es 100,200,300,400,500,600,700,800,900,1100,..
+                else {lcd.setCursor(13,0);lcd.print("000");}   // es 000,1000,2000,...
+*/
+
+           lcdsegs++;
+          //if (lcdsegs == 1000) lcdsegs = 0; 
+          //itoa(lcdsegs++,PlayBytes,10);lcd.setCursor(13,0);lcd.print(PlayBytes);          
+    /*      switch(offset){
+            case 0:
+              break;
+            case 1:
+              //lcd.print("0");
+              break;
+            case 2:
+              //lcd.print("00");
+              break;          
+          }  */
+          //lcd.print(lcdsegs++); 
+          //sprintf(PlayBytes,"%03d",lcdsegs++); lcd.print(PlayBytes);                     
+           //sprintf(PlayBytes,"Playing% 3d%%  %03d",newpct,lcdsegs++);lcd.setCursor(0,0);lcd.print(PlayBytes);        
+        #endif
+        
+        #ifdef NEWLCDSCREEN16x2
         
             if (lcdsegs % 10 != 0) {itoa(lcdsegs%10,PlayBytes,10);lcd.setCursor(15,0);lcd.print(PlayBytes);} // ultima cifra 1,2,3,4,5,6,7,8,9
             else 

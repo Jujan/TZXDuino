@@ -147,6 +147,13 @@ void TZXLoop() {
               lcd.print("%");  
              
             #endif
+            
+            #ifdef NEWLCDSCREEN16x2  
+              lcd.setCursor(8,0);
+              lcd.print(newpct);
+              lcd.print("%");  
+             
+            #endif
                          
             #ifdef OLED1306
               if (newpct <10) {setXY(8,0);sendChar(48+newpct%10);}
@@ -167,6 +174,12 @@ void TZXLoop() {
         if ((newpct >currpct)&& (newpct % 1 == 0)) {
           
             #ifdef LCDSCREEN16x2            
+                lcd.setCursor(8,0);
+                lcd.print(newpct);
+                lcd.print("%"); 
+            #endif
+            
+            #ifdef NEWLCDSCREEN16x2            
                 lcd.setCursor(8,0);
                 lcd.print(newpct);
                 lcd.print("%"); 
@@ -744,6 +757,16 @@ void TZXProcess() {
           //ID Not Recognised - Fall back if non TZX file or unrecognised ID occurs
           
            #ifdef LCDSCREEN16x2
+            lcd.clear();
+            lcd.setCursor(0,0);
+            lcd.print("ID? ");
+            lcd.setCursor(4,0);
+            lcd.print(String(currentID, HEX));
+            lcd.setCursor(0,1);
+            lcd.print(String(bytesRead,HEX) + " - L: " + String(loopCount, DEC));
+          #endif
+          
+           #ifdef NEWLCDSCREEN16x2
             lcd.clear();
             lcd.setCursor(0,0);
             lcd.print("ID? ");

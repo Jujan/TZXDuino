@@ -67,7 +67,7 @@
 #ifdef LCDSCREEN16x2
   #include <Wire.h> 
   #include <LiquidCrystal_I2C.h>
-  LiquidCrystal_I2C lcd(0x3f,16,2);
+  LiquidCrystal_I2C lcd(0x27,16,2);
   char indicators[] = {'|', '/', '-',0};
   uint8_t SpecialChar [8]= { 0x00, 0x10, 0x08, 0x04, 0x02, 0x01, 0x00, 0x00 };
 #endif
@@ -167,6 +167,13 @@ void setup() {
     lcd.createChar(0, SpecialChar);
   #endif
   
+  #ifdef NEWLCDSCREEN16x2
+    lcd.init();                     //Initialise LCD (16x2 type)
+    lcd.backlight();
+    lcd.clear();
+    lcd.createChar(0, SpecialChar);
+  #endif
+  
   #ifdef SERIALSCREEN
     Serial.begin(115200);
   #endif
@@ -239,6 +246,10 @@ void setup() {
   delay(500);
   
   #ifdef LCDSCREEN16x2
+    lcd.clear();
+  #endif
+  
+  #ifdef NEWLCDSCREEN16x2
     lcd.clear();
   #endif
 
@@ -320,6 +331,31 @@ void loop(void) {
               
             #endif
             
+            #ifdef NEWLCDSCREEN16x2            
+     /*         //lcd_clearline(0);
+              lcd.setCursor(0,0);
+              lcd.print(F("Paused "));
+              //sprintf(PlayBytes,"Paused % 3d%%  %03d",newpct,lcdsegs%1000);lcd.setCursor(0,0);lcd.print(PlayBytes);               
+              //lcd.print(entry.curPosition()); */
+
+              //sprintf(PlayBytes,"Paused % 3d%%  %03d",newpct,lcdsegs%1000); sendStrXY(PlayBytes,0,0);
+              printtextF(PSTR("Paused"),0);                              
+              itoa(newpct,PlayBytes,10);
+              strcat_P(PlayBytes,PSTR("%"));
+              lcd.setCursor(8,0);
+              lcd.print(PlayBytes);
+              //sprintf(PlayBytes,"%03d",lcdsegs%1000);lcd.setCursor(13,0);lcd.print(PlayBytes);
+              strcpy(PlayBytes,"000");
+              if ((lcdsegs %1000) <10) itoa(lcdsegs%10,PlayBytes+2,10);
+              else 
+                 if ((lcdsegs %1000) <100)itoa(lcdsegs%1000,PlayBytes+1,10);
+                 else 
+                    itoa(lcdsegs%1000,PlayBytes,10);
+                                
+              lcd.setCursor(13,0);lcd.print(PlayBytes); 
+              
+            #endif
+            
             #ifdef OLED1306
               //sprintf(PlayBytes,"Paused % 3d%%  %03d",newpct,lcdsegs%1000); sendStrXY(PlayBytes,0,0);
               printtextF(PSTR("Paused "),0);                              
@@ -360,6 +396,31 @@ void loop(void) {
             //printtext(PlayBytes,0);
 
             #ifdef LCDSCREEN16x2
+     /*         //lcd_clearline(0);  
+              lcd.setCursor(0,0);
+              lcd.print(F("Playing"));                 
+              //lcd.print(PlayBytes); */
+
+              //sprintf(PlayBytes,"Playing% 3d%%  %03d",newpct,lcdsegs%1000); sendStrXY(PlayBytes,0,0);
+              printtextF(PSTR("Playing"),0);                           
+              itoa(newpct,PlayBytes,10);
+              strcat_P(PlayBytes,PSTR("%"));
+              lcd.setCursor(8,0);
+              lcd.print(PlayBytes);
+              //sprintf(PlayBytes,"%03d",lcdsegs%1000);lcd.setCursor(13,0);lcd.print(PlayBytes);
+              strcpy(PlayBytes,"000");
+              if ((lcdsegs %1000) <10) itoa(lcdsegs%10,PlayBytes+2,10);
+              else 
+                 if ((lcdsegs %1000) <100)itoa(lcdsegs%1000,PlayBytes+1,10);
+                 else 
+                    itoa(lcdsegs%1000,PlayBytes,10);
+                                
+              lcd.setCursor(13,0);
+              lcd.print(PlayBytes); 
+                             
+            #endif
+            
+            #ifdef NEWLCDSCREEN16x2
      /*         //lcd_clearline(0);  
               lcd.setCursor(0,0);
               lcd.print(F("Playing"));                 
@@ -608,6 +669,31 @@ void loop(void) {
               
             #endif
             
+         #ifdef NEWLCDSCREEN16x2            
+     /*         //lcd_clearline(0);
+              lcd.setCursor(0,0);
+              lcd.print(F("Paused "));
+              //sprintf(PlayBytes,"Paused % 3d%%  %03d",newpct,lcdsegs%1000);lcd.setCursor(0,0);lcd.print(PlayBytes);               
+              //lcd.print(entry.curPosition()); */
+
+              //sprintf(PlayBytes,"Paused % 3d%%  %03d",newpct,lcdsegs%1000); sendStrXY(PlayBytes,0,0);
+              printtextF(PSTR("Paused"),0);                              
+              itoa(newpct,PlayBytes,10);
+              strcat_P(PlayBytes,PSTR("%"));
+              lcd.setCursor(8,0);
+              lcd.print(PlayBytes);
+              //sprintf(PlayBytes,"%03d",lcdsegs%1000);lcd.setCursor(13,0);lcd.print(PlayBytes);
+              strcpy(PlayBytes,"000");
+              if ((lcdsegs %1000) <10) itoa(lcdsegs%10,PlayBytes+2,10);
+              else 
+                 if ((lcdsegs %1000) <100)itoa(lcdsegs%1000,PlayBytes+1,10);
+                 else 
+                    itoa(lcdsegs%1000,PlayBytes,10);
+                                
+              lcd.setCursor(13,0);lcd.print(PlayBytes); 
+              
+            #endif
+            
             #ifdef OLED1306
               //sprintf(PlayBytes,"Paused % 3d%%  %03d",newpct,lcdsegs%1000); sendStrXY(PlayBytes,0,0);
               printtextF(PSTR("Paused "),0);                              
@@ -645,6 +731,31 @@ void loop(void) {
        if(motorState==0 && pauseOn==1) {
          //printtextF(PSTR("Playing"),0);
          #ifdef LCDSCREEN16x2
+     /*         //lcd_clearline(0);  
+              lcd.setCursor(0,0);
+              lcd.print(F("Playing"));                 
+              //lcd.print(PlayBytes); */
+
+              //sprintf(PlayBytes,"Playing% 3d%%  %03d",newpct,lcdsegs%1000); sendStrXY(PlayBytes,0,0);
+              printtextF(PSTR("Playing"),0);                           
+              itoa(newpct,PlayBytes,10);
+              strcat_P(PlayBytes,PSTR("%"));
+              lcd.setCursor(8,0);
+              lcd.print(PlayBytes);
+              //sprintf(PlayBytes,"%03d",lcdsegs%1000);lcd.setCursor(13,0);lcd.print(PlayBytes);
+              strcpy(PlayBytes,"000");
+              if ((lcdsegs %1000) <10) itoa(lcdsegs%10,PlayBytes+2,10);
+              else 
+                 if ((lcdsegs %1000) <100)itoa(lcdsegs%1000,PlayBytes+1,10);
+                 else 
+                    itoa(lcdsegs%1000,PlayBytes,10);
+                                
+              lcd.setCursor(13,0);
+              lcd.print(PlayBytes); 
+                             
+            #endif
+            
+         #ifdef NEWLCDSCREEN16x2
      /*         //lcd_clearline(0);  
               lcd.setCursor(0,0);
               lcd.print(F("Playing"));                 
@@ -879,6 +990,39 @@ void scrollText(char* text)
   //lcd_clearline(1);
   //lcd.print(outtext);
   #endif
+  
+  #ifdef NEWLCDSCREEN16x2
+  //Text scrolling routine.  Setup for 16x2 screen so will only display 16 chars
+  if(scrollPos<0) scrollPos=0;
+  char outtext[17];
+  if(isDir) { outtext[0]= 0x3E; 
+    for(int i=1;i<16;i++)
+    {
+      int p=i+scrollPos-1;
+      if(p<strlen(text)) 
+      {
+        outtext[i]=text[p];
+      } else {
+        outtext[i]='\0';
+      }
+    }
+  } else { 
+    for(int i=0;i<16;i++)
+    {
+      int p=i+scrollPos;
+      if(p<strlen(text)) 
+      {
+        outtext[i]=text[p];
+      } else {
+        outtext[i]='\0';
+      }
+    }
+  }
+  outtext[16]='\0';
+  printtext(outtext,1);
+  //lcd_clearline(1);
+  //lcd.print(outtext);
+  #endif
 
   #ifdef OLED1306
   //Text scrolling routine.  Setup for 16x2 screen so will only display 16 chars
@@ -969,6 +1113,13 @@ void printtextF(const char* text, int l) {  //Print text to screen.
     lcd.setCursor(0,l);
     lcd.print(reinterpret_cast <const __FlashStringHelper *> (text));
   #endif
+  
+  #ifdef NEWLCDSCREEN16x2
+    lcd.setCursor(0,l);
+    lcd.print(F("                    "));
+    lcd.setCursor(0,l);
+    lcd.print(reinterpret_cast <const __FlashStringHelper *> (text));
+  #endif
 
  #ifdef OLED1306
       if ( l == 0 ) {
@@ -1001,6 +1152,13 @@ void printtext(char* text, int l) {  //Print text to screen.
   #endif
   
   #ifdef LCDSCREEN16x2
+    lcd.setCursor(0,l);
+    lcd.print(F("                    "));
+    lcd.setCursor(0,l);
+    lcd.print(text);
+  #endif
+  
+  #ifdef NEWLCDSCREEN16x2
     lcd.setCursor(0,l);
     lcd.print(F("                    "));
     lcd.setCursor(0,l);
