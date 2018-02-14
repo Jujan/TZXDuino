@@ -67,7 +67,7 @@
 #ifdef LCDSCREEN16x2
   #include <Wire.h> 
   #include <LiquidCrystal_I2C.h>
-  LiquidCrystal_I2C lcd(0x27,16,2);
+  LiquidCrystal_I2C lcd(0x3f,16,2);
   char indicators[] = {'|', '/', '-',0};
   uint8_t SpecialChar [8]= { 0x00, 0x10, 0x08, 0x04, 0x02, 0x01, 0x00, 0x00 };
 #endif
